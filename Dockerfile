@@ -4,7 +4,7 @@ RUN apt-get update && \
     apt-get install -y curl git zip build-essential cmake ccache tzdata libspdlog-dev libliquid-dev nlohmann-json3-dev libmosquitto-dev libgtest-dev libgmock-dev libusb-1.0-0-dev libfftw3-dev libboost-all-dev libsoapysdr-dev
 
 WORKDIR /sdrplay_api
-COPY sdrplay/*.run .
+COPY sdrplay/*.run ./
 RUN chmod +x ./SDRplay_RSP_API-`arch`-3.07.run && \
     ./SDRplay_RSP_API-`arch`-3.07.run --tar xvf && \
     cp -rf inc/sdrplay_api*h /usr/local/include/ && \
