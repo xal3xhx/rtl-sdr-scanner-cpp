@@ -45,7 +45,7 @@ std::string sampleRatesToString(const std::vector<double>& sampleRates) {
 SoapySdrDevice::SoapySdrDevice(const Config& config, const std::string& serial, const int32_t offset, const std::map<std::string, float>& gains)
     : SdrDevice(serial, offset), m_config(config), m_device(nullptr), m_rxStream(nullptr), m_isWorking(false), m_thread(nullptr) {
   try {
-    m_device = SoapySDR::Device::make("serial=" + serial);
+    m_device = SoapySDR::Device::make("rtltcp=192.168.1.115:1234");
   } catch (const std::exception&) {
     Logger::error("SoapySDR", "can not open device: {}", m_serial);
     throw std::runtime_error(std::string("can not open device: ") + m_serial);
@@ -87,7 +87,7 @@ void SoapySdrDevice::setLogLevel() { SoapySDR::setLogLevel(SoapySDR::LogLevel::S
 
 std::vector<SdrDevice::Device> SoapySdrDevice::listDevices() {
   std::vector<SdrDevice::Device> devices;
-  const SoapySDR::KwargsList results = SoapySDR::Device::enumerate("remote=");
+  const SoapySDR::KwargsList results = SoapySDR::Device::enumerate("rtltcp=192.168.1.115:1234");
   Logger::info("SoapySDR", "found {} devices:", results.size());
 
   for (uint32_t i = 0; i < results.size(); ++i) {
